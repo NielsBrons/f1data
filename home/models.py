@@ -58,6 +58,7 @@ class Events(models.Model):
     PRACTICE3 = 'P3'
     SPRINT = 'SPRT'
     TYPE_CHOICES = [
+        (RACE, 'Race'),
         (QUALIFYING, 'Qualifying'),
         (PRACTICE1, 'Practice 1'),
         (PRACTICE2, 'Practice 2'),
