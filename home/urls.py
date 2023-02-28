@@ -20,3 +20,4 @@ urlpatterns += (
 urlpatterns += (
     path('home/circuit/detail/<int:pk>/', views.CircuitDetailView.as_view(), name='home_circuit_detail'),
 )
+

@@ -51,7 +51,26 @@ class Events(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     date = models.DateField()
     time = models.TimeField()
-    type = models.CharField(max_length=30)
+    
+    RACE = 'RACE'
+    QUALIFYING = 'QUAL'
+    PRACTICE1 = 'P1'
+    PRACTICE2 = 'P2'
+    PRACTICE3 = 'P3'
+    SPRINT = 'SPRT'
+    TYPE_CHOICES = [
+        (QUALIFYING, 'Qualifying'),
+        (PRACTICE1, 'Practice 1'),
+        (PRACTICE2, 'Practice 2'),
+        (PRACTICE3, 'Practice 3'),
+        (SPRINT, 'Sprint'),
+    ]
+    
+    type = models.CharField(
+        max_length=4,
+        choices=TYPE_CHOICES,
+    )
+
 
     # Relationship Fields
     race = models.ForeignKey(
