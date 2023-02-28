@@ -26,8 +26,8 @@ class EventsAdminForm(forms.ModelForm):
 
 class EventsAdmin(admin.ModelAdmin):
     form = EventsAdminForm
-    list_display = ['name', 'created', 'last_updated', 'date', 'time', 'type']
-    readonly_fields = ['name', 'created', 'last_updated', 'date', 'time', 'type']
+    list_display = ['created', 'last_updated', 'date', 'time', 'type']
+    readonly_fields = ['created', 'last_updated', 'date', 'time', 'type']
 
 admin.site.register(Events, EventsAdmin)
 

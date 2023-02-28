@@ -46,7 +46,6 @@ class Races(models.Model):
 class Events(models.Model):
 
     # Fields
-    name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     date = models.DateField()
