@@ -22,7 +22,7 @@ class Races(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     season = models.PositiveSmallIntegerField()
     round = models.SmallIntegerField() # got to refactor field name
-    sprint = models.BooleanField()
+    sprint = models.BooleanField(default=False)
 
     circuit = models.ForeignKey(
         'home.Circuit',
