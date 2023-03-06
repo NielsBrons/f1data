@@ -122,6 +122,7 @@ class Driver(models.Model):
     number = models.SmallIntegerField()
     permanent_number = models.SmallIntegerField()
     team = models.CharField(max_length=255)
+    nationality = models.CharField(max_length=255)
     
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
