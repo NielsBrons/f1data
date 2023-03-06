@@ -133,7 +133,6 @@ class Point(models.Model):
     points = models.SmallIntegerField()
     round_number = models.SmallIntegerField() # calculated up to this round
     season = models.PositiveSmallIntegerField()
-    eliminated = models.BooleanField()
     max_points = models.SmallIntegerField()
     
     # Relationship Fields
