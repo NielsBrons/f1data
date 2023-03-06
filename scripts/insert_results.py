@@ -26,10 +26,10 @@ def import_results(season='current', season_round='last', backfill=True):
     
     driver = r['Driver']
     driver_name = driver['givenName'] + " " + driver['familyName']
-    driver_number = r['number']
-    driver_position = r['position']
-    driver_points = r['points']
-    driver_permanent_number = driver['permanentNumber']
+    driver_number = int(r['number'])
+    driver_position = int(r['position'])
+    driver_points = int(r['points'])
+    driver_permanent_number = int(driver['permanentNumber'])
     driver_nationality = driver['nationality']
     driver_team = driver['Constructor']['name']
     
@@ -44,14 +44,15 @@ def import_results(season='current', season_round='last', backfill=True):
                                   seconds=driver_fastest_lap_timeobject.second, microseconds=driver_fastest_lap_timeobject.microsecond)
     
     
-    driver_object, created = Driver.objects.get_or_create(name=driver_name, number=driver_number, permanent_number=driver_permanent_number, team=driver_team)
+    driver_object, created = Driver.objects.get_or_create(name=driver_name, number=driver_number, permanent_number=driver_permanent_number, team=driver_team, nationality=driver_nationality)
     result_object, created = Result.objects.update_or_create(event=event_object, driver=driver_object,
                                                              defaults={'event' : event_object, 'driver' : driver_object, 'points': driver_points, 
                                                                        'total_time': driver_time_delta, 'fastest_lap': driver_fastest_lap_delta,
                                                                        'position': driver_position})
     
     
-    
+    points_object, created = Point.object.update_or_create(round_number=import_round, season=import_season, driver=driver_object,
+                                                           defaults={'points': driver_points})
     
     
     
