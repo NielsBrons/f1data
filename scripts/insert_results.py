@@ -1,7 +1,7 @@
-from home.models import Races, Events, Circuit, Point, Driver, Results, PointMath
+from home.models import Races, Events, Circuit, Point, Driver, Result, PointMath
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def run():
   import_results()
@@ -15,6 +15,11 @@ def import_results(season='current', season_round='last', backfill=True):
   import_season = data['season'] 
   import_round = data['round']
   
+  # get race event object
+  
+  race_object = Races.object.get(season=import_season, round=import_round)
+  event_object = Events.object.get(race=race_object, type=Events.RACE)
+  
   for r in data['Results']:
     
     # getting data from json
@@ -27,10 +32,26 @@ def import_results(season='current', season_round='last', backfill=True):
     driver_permanent_number = driver['permanentNumber']
     driver_nationality = driver['nationality']
     driver_team = driver['Constructor']['name']
+    
+    # time math, must be a better way?
     driver_time = r['Time']['time']
+    driver_time_timeobject = datetime.strptime(driver_time, '%H:%M:%S.%f')
+    driver_time_delta = timedelta(hours=.driver_time_timeobject.hour, minutes=driver_time_timeobject.minute, 
+                                  seconds=driver_time_timeobject.second, microseconds=driver_time_timeobject.microsecond)
     driver_fastest_lap = r['FastestLap']['Time']['time']
+    driver_fastest_lap_timeobject = datetime(datetime.strptime(driver_fastest_lap, '%M:%S.%f')
+    driver_fastest_lap_delta = timedelta(hours=driver_fastest_lap_timeobject.hour, minutes=driver_fastest_lap_timeobject.minute, 
+                                  seconds=driver_fastest_lap_timeobject.second, microseconds=driver_fastest_lap_timeobject.microsecond)
     
     
-    driver_object = Driver.objects.get_or_create(name=driver_name, number=driver_number, permanent_number=driver_permanent_number, team=driver_team)
+    driver_object, created = Driver.objects.get_or_create(name=driver_name, number=driver_number, permanent_number=driver_permanent_number, team=driver_team)
+    result_object, created = Result.objects.update_or_create(event=event_object, driver=driver_object,
+                                                             defaults={'event' : event_object, 'driver' : driver_object, 'points': driver_points, 
+                                                                       'total_time': driver_time_delta, 'fastest_lap': driver_fastest_lap_delta,
+                                                                       'position': driver_position})
+    
+    
+    
+    
     
     
