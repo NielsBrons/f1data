@@ -178,5 +178,5 @@ class Leaderboard(models.Model):
     
     driver = models.ForeighKey(
         'home.driver',
-        on_delete=models.CASCADE, related_name='driver",
+        on_delete=models.CASCADE, related_name='driver',
     )

@@ -7,7 +7,7 @@ def run():
   import_results()
 
 def import_results(season='current', season_round='last', backfill=True):
-  res = requests.get(f'http://ergast.com/api/f1/{season}/{current}/results.json')
+  res = requests.get(f'http://ergast.com/api/f1/{season}/{season_round}/results.json')
   data = res.json()
   
   data = data['MRData']['RaceTable']['Races'][0]
@@ -36,10 +36,10 @@ def import_results(season='current', season_round='last', backfill=True):
     # time math, must be a better way?
     driver_time = r['Time']['time']
     driver_time_timeobject = datetime.strptime(driver_time, '%H:%M:%S.%f')
-    driver_time_delta = timedelta(hours=.driver_time_timeobject.hour, minutes=driver_time_timeobject.minute, 
+    driver_time_delta = timedelta(hours=driver_time_timeobject.hour, minutes=driver_time_timeobject.minute, 
                                   seconds=driver_time_timeobject.second, microseconds=driver_time_timeobject.microsecond)
     driver_fastest_lap = r['FastestLap']['Time']['time']
-    driver_fastest_lap_timeobject = datetime(datetime.strptime(driver_fastest_lap, '%M:%S.%f')
+    driver_fastest_lap_timeobject = datetime.datetime.strptime(driver_fastest_lap, '%M:%S.%f')
     driver_fastest_lap_delta = timedelta(hours=driver_fastest_lap_timeobject.hour, minutes=driver_fastest_lap_timeobject.minute, 
                                   seconds=driver_fastest_lap_timeobject.second, microseconds=driver_fastest_lap_timeobject.microsecond)
     
