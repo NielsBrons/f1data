@@ -147,6 +147,7 @@ class Results(models.Model):
     points = models.SmallIntegerField()
     total_time = models.DurationField()
     fastest_lap = models.DurationField()
+    position = models.SmallIntegerField()
     
     event = models.ForeignKey(
         'home.events',
