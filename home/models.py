@@ -145,7 +145,7 @@ class Point(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     
-class Results(models.Model):
+class Result(models.Model):
     points = models.SmallIntegerField()
     total_time = models.DurationField()
     fastest_lap = models.DurationField()
