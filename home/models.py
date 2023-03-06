@@ -169,3 +169,14 @@ class PointMath(models.Model):
     
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
+    
+  
+class Leaderboard(models.Model):
+    season = models.PositiveSmallIntegerField()
+    points = models.SmallIntegerfield()
+    eliminated = models.BooleanField()
+    
+    driver = models.ForeighKey(
+        'home.driver',
+        on_delete=models.CASCADE, related_name='driver",
+    )
