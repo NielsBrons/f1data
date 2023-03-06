@@ -113,3 +113,57 @@ class Circuit(models.Model):
 
     def get_update_url(self):
         return reverse('home_circuit_update', args=(self.pk,))
+    
+class Driver(models.Model):
+    
+    # Fields
+    name = models.CharField(max_length=225)
+    number = models.SmallIntegerField()
+    permanent_number = models.SmallIntegerField()
+    team = models.CharField(max_length=255)
+    
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
+    
+class Point(models.Model):
+    
+    # Fields
+    points = models.SmallIntegerField()
+    season = models.PositiveSmallIntegerField()
+    eliminated = models.BooleanField()
+    max_points = models.SmallIntegerField()
+    
+    # Relationship Fields
+    driver = models.ForeignKey(
+        'home.driver',
+        on_delete=models.CASCADE, related_name="driver", 
+    )
+    
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
+    
+class Results(models.Model):
+    points = models.SmallIntegerField()
+    total_time = models.DurationField()
+    fastest_lap = models.DurationField()
+    
+    event = models.ForeignKey(
+        'home.events',
+        on_delete=models.CASCADE, related_name="events", 
+    )
+    
+    driver = models.ForeignKey(
+        'home.driver',
+        on_delete=models.CASCADE, related_name="driver", 
+    )
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
+
+
+class PointMath(models.Model):
+    season = models.PositiveSmallIntegerField()
+    max_points = models.PositiveSmallIntegerfield()
+    points_left = models.PositiveSmallIntegerfield()
+    
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
