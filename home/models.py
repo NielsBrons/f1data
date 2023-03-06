@@ -137,7 +137,7 @@ class Point(models.Model):
     # Relationship Fields
     driver = models.ForeignKey(
         'home.driver',
-        on_delete=models.CASCADE, related_name="driver", 
+        on_delete=models.CASCADE, related_name="point_driver", 
     )
     
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -156,7 +156,7 @@ class Result(models.Model):
     
     driver = models.ForeignKey(
         'home.driver',
-        on_delete=models.CASCADE, related_name="driver", 
+        on_delete=models.CASCADE, related_name="result_driver", 
     )
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -164,8 +164,8 @@ class Result(models.Model):
 
 class PointMath(models.Model):
     season = models.PositiveSmallIntegerField()
-    max_points = models.PositiveSmallIntegerfield()
-    points_left = models.PositiveSmallIntegerfield()
+    max_points = models.PositiveSmallIntegerField()
+    points_left = models.PositiveSmallIntegerField()
     
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -173,10 +173,10 @@ class PointMath(models.Model):
   
 class Leaderboard(models.Model):
     season = models.PositiveSmallIntegerField()
-    points = models.SmallIntegerfield()
+    points = models.SmallIntegerField()
     eliminated = models.BooleanField()
     
-    driver = models.ForeighKey(
+    driver = models.ForeignKey(
         'home.driver',
-        on_delete=models.CASCADE, related_name='driver',
+        on_delete=models.CASCADE, related_name='leaderboard_driver',
     )
